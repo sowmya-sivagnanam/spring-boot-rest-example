@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "385583b0-5aac-478a-a890-b6401a2e8150",
+		"name": "TestHotel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15869911"
+	},
+	"item": [
+		{
+			"name": "create resource",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"name\" : \"Beds R Us\",\n\"description\" : \"Very basic, small rooms but clean\",\n\"city\" : \"Santa Ana\",\n\"rating\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}example/v1/hotels",
+					"host": [
+						"{{URL}}example"
+					],
+					"path": [
+						"v1",
+						"hotels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get resources paginated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify the tatus code is 200\", function () {",
+							"pm.variables.get(\"variable_key\");",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"verify the Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"console.log(response.id);",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/example/v1/hotels",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"example",
+						"v1",
+						"hotels"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.variables.get(\"variable_key\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Beds R Us\",\n    \"description\": \"Very basic, small rooms but clean\",\n    \"city\": \"Santa Ana3\",\n    \"id\": 1,\n    \"rating\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/example/v1/hotels/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"example",
+						"v1",
+						"hotels",
+						"1"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get single resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify rating is 3\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.rating).to.eql(3);",
+							"  ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/example/v1/hotels/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"example",
+						"v1",
+						"hotels",
+						"1"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
